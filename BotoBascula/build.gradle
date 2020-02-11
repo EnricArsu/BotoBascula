@@ -1,0 +1,40 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    System.properties['com.android.build.gradle.overrideVersionCheck']='true'
+    repositories {
+        jcenter()
+        mavenCentral()
+        google()
+        maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+        classpath "gradle.plugin.ua.eshepelyuk:ManifestClasspath:1.0.0"
+
+    }
+}
+apply plugin: "ua.eshepelyuk.ManifestClasspath"
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+        maven {
+            url "https://maven.google.com"
+        }
+        google()
+    }
+    subprojects {
+    afterEvaluate {
+        project ->
+            if (project.hasProperty("android")) {
+                android {
+                    compileSdkVersion = 28
+                    buildToolsVersion = "27.0.3"
+                }
+            }
+    }
+    }
+}
